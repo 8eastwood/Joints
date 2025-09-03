@@ -1,23 +1,26 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class SwingController : MonoBehaviour
+public class Swing : MonoBehaviour
 {
-    [Header("Ссылки")]
+    [Header("Ссылки")] 
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private Raycaster _raycaster;
     [SerializeField] private Camera _mainCamera;
 
-    [Header("Настройки")]
+    [Header("Настройки")] 
     [SerializeField] private LayerMask _swingLayer;
-    [SerializeField] private float forceMultiplier = 10f;
+    [SerializeField] private float _forceMultiplier = 10f;
 
     private Rigidbody _rigidbody;
 
-    void Start()
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
 
+    private void Start()
+    {
         if (_rigidbody == null)
         {
             Debug.LogError("Rigidbody не найден на объекте");
@@ -28,7 +31,7 @@ public class SwingController : MonoBehaviour
     {
         if (_inputReader.IsMouseLeftButtonDown)
         {
-            if (_raycaster.TryHitSwing(_inputReader.MousePosition,  _mainCamera, _swingLayer))
+            if (_raycaster.TryHitSwing(_inputReader.MousePosition, _mainCamera, _swingLayer))
             {
                 ApplySwingForce();
             }
@@ -44,8 +47,6 @@ public class SwingController : MonoBehaviour
         Vector3 normalizeDirection = Vector3.forward.normalized;
         direction = transform.TransformDirection(normalizeDirection);
 
-        _rigidbody.AddForce(direction * forceMultiplier, ForceMode.Impulse);
+        _rigidbody.AddForce(direction * _forceMultiplier, ForceMode.Impulse);
     }
-
-    
 }

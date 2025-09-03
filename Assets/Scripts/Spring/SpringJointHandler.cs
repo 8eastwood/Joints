@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SpringJointController : MonoBehaviour
+public class SpringJointHandler : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private Rigidbody _rigidbody;
